@@ -1,144 +1,29 @@
-# 🎂 Interactive 3D Birthday Website
+# Noor’s Birthday Celebration
 
-A cinematic, interactive 3D birthday experience built with React, Three.js,
-and React Three Fiber. Enter, explore a glowing 3D world, light candles on a
-birthday cake, browse a photo gallery, watch personal videos, read a
-personal message, open a 3D gift, and land on a final celebration screen.
-Opens with a pulsing GIF greeting. Every scene has a Back button.
+A personal birthday website with an elegant blush-and-cream theme, botanical illustrations, refined typography, and a responsive layout. The celebration opens immediately without a loading screen or a WebGL requirement.
 
-## Tech stack
+## Birthday experience
 
-- React + Vite
-- Three.js / React Three Fiber / @react-three/drei
-- GSAP (cinematic animation & camera movement)
-- HTML5 Audio (sound, unlocked on first interaction)
-- Plain CSS (no framework needed for the overlay UI)
+- Light the candles, make a wish, and blow them out; the illustrated hero cake follows the same candle state.
+- Read Noor’s personal letter in a keyboard-accessible dialog.
+- Unwrap the original playful achievement certificate.
+- Play or pause the included birthday music. Audio starts only after clicking the music button, and playback errors offer a retry.
+- Restart the celebration to reset the candles and gift.
 
-## Experience flow
+## Personalization
 
-```
-LOADING → INTRO → BIRTHDAY_ROOM → CAKE → MEMORIES → VIDEOS → MESSAGE → GIFT → FINAL
-```
+Edit `src/config/birthdayConfig.js` to change `final.name`, `message.body`, `final.closing`, certificate details, or `music.background`. Update the name in `certificate.name` as well when changing the recipient. The browser title and social metadata are in `index.html`.
 
-Scene state lives in `src/hooks/useScene.jsx`. The 3D canvas
-(`src/components/Scene/Experience.jsx`) swaps the active scene component;
-each scene lives in `src/scenes/`.
+The theme, spacing, responsive rules, and animations are in `src/styles/birthday.css`. The page uses Cormorant Garamond, DM Sans, and La Belle Aurore from Google Fonts with local font fallbacks. Cake, flowers, letter, and gift visuals are drawn with SVG and CSS; they do not depend on external image services.
 
-## Getting started
+## Development
 
-```bash
-npm install
-npm run dev       # http://localhost:5173
-npm run build     # production build → dist/
-npm run preview   # preview the production build locally
-```
+The active frontend uses React and Vite. Install dependencies with `npm install`, start a local development server with `npm run dev`, and check code with `npm run lint`.
 
-## 🎨 Personalize it — the only file you need to touch
-
-Everything personal (name, message, opening GIF, music, colors) lives in:
-
-```
-src/config/birthdayConfig.js
-```
-
-Open it and replace the placeholders:
-
-```js
-name: "[NAME]"                       → their name
-message.body: "[PERSONAL MESSAGE]"   → your birthday message
-music.background: "[BACKGROUND MUSIC]" → e.g. "/audio/my-song.mp3"
-```
-
-### Replacing the opening GIF
-
-`public/gif/opening.gif` ships with a simple placeholder (a pulsing heart).
-Swap in your own GIF at that path, or change `birthdayConfig.intro.gif.src`
-to point anywhere else in `public/`.
-
-### Replacing photos
-
-Drop your images into `public/images/` and point `birthdayConfig.photos[].src`
-at them. Any number of photos works — the gallery lays them out in an arc
-automatically. Tap a photo to bring it forward; the bottom panel shows its
-caption and a Close button.
-
-### Adding your videos
-
-Drop up to 3 (or more — just add entries) video files into `public/videos/`
-and update `birthdayConfig.videos[].src` to point at them. Until you do,
-each slot shows a friendly "drop your video here" placeholder card instead
-of a broken player. Tap a video to play it with native controls.
-
-### Adding music / sound effects
-
-Demo audio is already in `public/audio/` — a synthesized "Happy Birthday to
-You" music-box melody for the background track, plus warm chime SFX for
-candles/balloons/gift. Swap any of them out by dropping your own file into
-`public/audio/` and updating the path in `birthdayConfig.music`. Nothing
-plays automatically — browsers block autoplay, so the background track
-only starts the moment the person clicks **"✨ Enter."** Missing/placeholder
-paths (still starting with `[`) are silently skipped.
-
-### About the font
-
-The brief asked for **Rustic Roadway** — that's a paid/personal-use-only
-script font from Letterara Studio, not on Google Fonts, and not legally
-redistributable in this project. **Dancing Script** (free, Google Fonts)
-is used as a similarly warm handwritten stand-in for headings, paired with
-Playfair Display for smaller text. If you own a Rustic Roadway license,
-drop the font file at `public/fonts/RusticRoadway.woff2` and uncomment the
-`@font-face` block at the top of `src/styles/global.css` — every heading
-picks it up automatically via the `--font-display` CSS variable.
-
-## Project structure
-
-```
-src/
-  components/
-    Scene/         camera rig, lighting, floor, Canvas wrapper
-    Cake/           3D cake + candles
-    Balloons/       interactive poppable balloons
-    Gift/           3D gift box open animation
-    Particles/      reusable particle field + burst effects
-    BirthdayText/   animated text reveal
-    UI/             buttons, loading screen, music toggle
-  scenes/            one file per stage of the journey
-  hooks/             useScene, useAudio, useResponsive
-  config/            birthdayConfig.js  ← personalize here
-  styles/            global.css
-```
-
-## Performance & responsiveness
-
-`src/hooks/useResponsive.js` detects device tier (cores/memory/mobile) and
-scales particle count, shadow quality, and render resolution accordingly —
-low-end phones automatically get a lighter scene instead of a scaled-down
-desktop one. Mouse-parallax camera movement is disabled on mobile in favor
-of tap interactions.
+Netlify runs the configured `npm run build` command and publishes `dist`. The page does not require a database, authentication, or environment variables.
 
 ## Accessibility
 
-- All interactive elements are real `<button>`s with visible focus states.
-- `prefers-reduced-motion` disables non-essential CSS animation.
-- A persistent mute control is always available.
-- Text overlays maintain contrast against the dark scene background.
+The site includes a skip link, semantic navigation, visible keyboard focus, native modal dialogs with Escape-to-close and focus restoration, live candle-state announcements, mobile layouts, browser zoom support, and reduced-motion styling.
 
-## Deploying to Vercel
-
-1. Push this project to a GitHub repo.
-2. Go to vercel.com/new and import the repo.
-3. Vercel auto-detects Vite (`vercel.json` is included). Click **Deploy**.
-4. Share the generated URL 🎉
-
-No environment variables or backend are required — this is a pure static
-frontend build.
-
-## What's still a placeholder
-
-No real personal content was invented, per request. Replace:
-- `[NAME]` → recipient's name
-- `[PERSONAL MESSAGE]` → your message
-- `public/gif/opening.gif` → your own opening GIF
-- `public/images/photo1.jpg` etc. → real photos
-- `public/videos/` → your own video files (see `birthdayConfig.videos`)
-- `[BACKGROUND MUSIC]` and the SFX paths → real audio files (optional)
+The previous 3D scene components and global stylesheet remain in the repository but are not imported by the redesigned page.

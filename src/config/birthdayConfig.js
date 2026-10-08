@@ -7,8 +7,8 @@ const birthdayConfig = {
   name: "NOOR",
 
   seo: {
-    title: "Happy Birthday ❤️",
-    description: "A little surprise for someone special.",
+    title: "Happy Birthday, Noor — A Little Celebration",
+    description: "A little joy, a little magic, and a whole lot of love. A birthday celebration made just for Noor.",
   },
 
   intro: {
@@ -87,12 +87,12 @@ const birthdayConfig = {
   },
 
   colors: {
-    background: "#050313",
-    purple: "#8b5cf6",
-    pink: "#ec4899",
-    softBlue: "#60a5fa",
-    gold: "#f5c451",
-    white: "#f8f7ff",
+    background: "#fcf8f2",
+    purple: "#794754",
+    pink: "#965e6c",
+    softBlue: "#acb69b",
+    gold: "#b69a68",
+    white: "#fffdf9",
   },
 };
 
